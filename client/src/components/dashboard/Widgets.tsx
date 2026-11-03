@@ -14,7 +14,7 @@ export function ProfileCompletionIndicator({ completion, compact = false }: { co
         <div className="relative h-20 w-20 shrink-0">
           <svg viewBox="0 0 80 80" className="h-20 w-20 -rotate-90" aria-hidden>
             <circle cx="40" cy="40" r={r} fill="none" stroke="#E2E8F0" strokeWidth="8" />
-            <circle cx="40" cy="40" r={r} fill="none" stroke="#087F8C" strokeWidth="8" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={offset} className="transition-[stroke-dashoffset] duration-700" />
+            <circle cx="40" cy="40" r={r} fill="none" stroke="#2563EB" strokeWidth="8" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={offset} className="transition-[stroke-dashoffset] duration-700" />
           </svg>
           <span className="absolute inset-0 grid place-items-center text-lg font-extrabold">{completion.percent}%</span>
         </div>

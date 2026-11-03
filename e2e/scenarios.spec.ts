@@ -31,7 +31,7 @@ async function logout(page: Page) {
 test('Scenario A — new user: register, profile, recommendations, save, track, checklist, persistence', async ({ page }) => {
   const email = `asha${Date.now()}@example.com`;
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Your Opportunities');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Find scholarships');
   await shot(page, '01-landing');
 
   await page.getByRole('link', { name: 'Get Started' }).first().click();

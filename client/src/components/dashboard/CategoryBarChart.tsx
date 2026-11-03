@@ -19,13 +19,13 @@ export function CategoryBarChart({ data, title, unit }: { data: Datum[]; title: 
             <XAxis type="number" allowDecimals={false} tick={{ fill: '#64748B', fontSize: 12 }} axisLine={false} tickLine={false} />
             <YAxis type="category" dataKey="label" width={150} tick={{ fill: '#334155', fontSize: 12 }} axisLine={false} tickLine={false} />
             <Tooltip
-              cursor={{ fill: 'rgba(8,127,140,0.06)' }}
+              cursor={{ fill: 'rgba(37,99,235,0.06)' }}
               formatter={(v) => [`${v} ${unit}`, '']}
               separator=""
               contentStyle={{ borderRadius: 12, border: '1px solid #E2E8F0', boxShadow: '0 8px 24px -12px rgba(15,23,42,.25)', fontSize: 13 }}
               labelStyle={{ color: '#0F172A', fontWeight: 600 }}
             />
-            <Bar dataKey="count" fill="#087F8C" radius={[0, 4, 4, 0]} maxBarSize={18} />
+            <Bar dataKey="count" fill="#2563EB" radius={[0, 4, 4, 0]} maxBarSize={18} />
           </BarChart>
         </ResponsiveContainer>
       </div>
