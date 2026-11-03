@@ -3,6 +3,7 @@ services:
   - type: web
     name: schemesetu-api
     runtime: node
+    plan: free
     rootDir: .
     buildCommand: npm ci --include=dev && npm run build -w server
     startCommand: npm run start -w server
