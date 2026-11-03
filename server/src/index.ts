@@ -8,7 +8,7 @@ async function main() {
   const app = createApp();
   const server = app.listen(env.PORT, () => {
     logger.info(
-      { port: env.PORT, env: env.NODE_ENV, ai: env.aiEnabled ? 'enabled' : 'disabled (fallback summaries)' },
+      { port: env.PORT, env: env.NODE_ENV },
       `SchemeSetu API listening on http://localhost:${env.PORT}`,
     );
   });

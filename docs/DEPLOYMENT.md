@@ -51,7 +51,6 @@ Environment variables:
 | `CLIENT_URL` | `https://<app>.vercel.app`, exact and with no trailing slash. Comma-separate multiple origins. |
 | `COOKIE_SAMESITE` | `lax` (with the Vercel rewrite) |
 | `TRUST_PROXY` | `2` (Vercel plus Render). Use `1` if browsers call Render directly. |
-| `GEMINI_API_KEY` | optional |
 | `LOG_LEVEL` | `info` |
 
 In production the server refuses to start if the JWT secrets are missing or shorter than 32 characters. Logs are JSON
@@ -79,7 +78,6 @@ will not keep sessions with this setup, which is why the rewrite approach is rec
 - [ ] Register, log out and log in work, and cookies are set for the Vercel domain
 - [ ] Profile save, bookmark, track and checklist persist after reloading
 - [ ] An admin can create and publish a scheme, and a normal user gets 403 from `/api/v1/admin/stats`
-- [ ] The AI explainer returns `source: "ai"` if a key is configured, otherwise the fallback
 
 ## Security notes
 

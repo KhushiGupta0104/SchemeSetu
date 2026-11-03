@@ -2,13 +2,12 @@ import { Router } from 'express';
 import { asyncHandler as h } from '../utils/http.js';
 import { optionalAuth, requireAuth, requireRole } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
-import { aiDailyLimiter, aiLimiter, authLimiter } from '../middleware/rateLimiters.js';
+import { authLimiter } from '../middleware/rateLimiters.js';
 import * as V from '../validators/index.js';
 import * as auth from '../controllers/authController.js';
 import * as profile from '../controllers/profileController.js';
 import * as schemes from '../controllers/schemeController.js';
 import * as data from '../controllers/userDataController.js';
-import * as ai from '../controllers/aiController.js';
 import * as admin from '../controllers/adminController.js';
 
 export const router = Router();
@@ -53,10 +52,6 @@ router.delete('/applications/:id', requireAuth, validate(V.idParam, 'params'), h
 router.get('/checklists', requireAuth, h(data.listChecklists));
 router.get('/checklists/:schemeId', requireAuth, validate(V.schemeIdParam, 'params'), h(data.getChecklist));
 router.put('/checklists/:schemeId', requireAuth, validate(V.schemeIdParam, 'params'), validate(V.updateChecklistSchema), h(data.updateChecklist));
-
-// ---- AI ----
-router.get('/ai/status', h(ai.aiStatus));
-router.post('/ai/explain', requireAuth, aiLimiter, aiDailyLimiter, validate(V.aiExplainSchema), h(ai.explain));
 
 // ---- admin (server-side RBAC on every route) ----
 const adminRouter = Router();

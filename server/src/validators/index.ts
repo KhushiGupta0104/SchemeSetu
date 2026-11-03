@@ -237,7 +237,7 @@ export const adminSchemeListQuery = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(20),
 });
 
-// ---------------- saved / applications / checklist / ai ----------------
+// ---------------- saved / applications / checklist ----------------
 
 export const saveSchemeSchema = z.object({ schemeId: objectId }).strict();
 
@@ -262,14 +262,3 @@ export const updateApplicationSchema = z
 export const updateChecklistSchema = z
   .object({ completedDocumentIds: z.array(z.string().max(64)).max(50) })
   .strict();
-
-export const AI_PRESETS = ['overview', 'eligibility', 'documents', 'apply', 'benefits', 'hindi'] as const;
-
-export const aiExplainSchema = z
-  .object({
-    schemeId: objectId,
-    preset: z.enum(AI_PRESETS).optional(),
-    question: z.string().trim().min(3).max(500).optional(),
-  })
-  .strict()
-  .refine((v) => v.preset || v.question, 'Choose a question or type your own.');

@@ -83,10 +83,6 @@ test('Scenario A — new user: register, profile, recommendations, save, track, 
   await expect(dialog.getByText('1 of 4 prepared')).toBeVisible();
   await page.keyboard.press('Escape');
 
-  // AI explainer fallback (no key configured)
-  await page.getByRole('button', { name: 'What documents are required?' }).click();
-  await expect(page.getByText('Summary from scheme record')).toBeVisible();
-
   // Update application status
   await page.goto('/applications');
   await expect(page.getByText('not automatically synchronized with government portals')).toBeVisible();

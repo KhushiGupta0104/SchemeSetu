@@ -61,8 +61,7 @@ const PAGES: Record<PageKey, { title: string; description: string; body: ReactNo
         <H>How we use it</H>
         <P>
           Your profile is used only to check scheme eligibility for you. Administrators see aggregate scheme statistics, not individual
-          profiles. If AI explanations are enabled, the scheme record and the result of your eligibility check (met / not met / unknown for
-          each condition) are sent to the AI provider — your name, email and raw profile values are not.
+          profiles.
         </P>
         <H>Security</H>
         <P>Sessions use short-lived tokens in secure, HttpOnly cookies. Requests are validated and rate-limited, and logs avoid personal data.</P>

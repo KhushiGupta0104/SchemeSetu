@@ -17,8 +17,8 @@ The first backend or E2E run downloads a MongoDB binary for `mongodb-memory-serv
 
 | Suite | Result |
 |---|---|
-| Backend: 8 files | **103 passed** |
-| Frontend: 3 files | **13 passed** |
+| Backend: 7 files | **98 passed** |
+| Frontend: 3 files | **12 passed** |
 | End-to-end (Chromium) | **4 passed** |
 | Lint (server and client) | 0 errors |
 | Type check (server and client) | clean |
@@ -53,19 +53,18 @@ The first backend or E2E run downloads a MongoDB binary for `mongodb-memory-serv
   verification date requirement, filters, aggregate-only stats, and safe deletion.
 - **User data:** idempotent saves and persistence across logout and login, Scenario C ownership (another user's application returns 404),
   application history and validation, and checklist persistence when admins add or remove documents. Checklists are private per user.
-- **AI:** login required, grounded fallback without a key, model path, fallback on model error, input limits, and prompt-injection delimiter neutralisation.
 
 ### Frontend (`client/src/test`)
 
 Login validation, incorrect-password message, password visibility toggle, registration validation and duplicate email,
-SchemeCard rendering, EligibilityBreakdown rendering, safe AI text rendering (no HTML injection), checklist interaction
+SchemeCard rendering, EligibilityBreakdown rendering, checklist interaction
 (PUT payload and CSRF header), status stepper, debounced search, loading and error states, and the full onboarding wizard
 (validation, step navigation, review and submit payload).
 
 ### End-to-end (`e2e/scenarios.spec.ts`)
 
 - **Scenario A — new user:** landing, register, four-step onboarding, dashboard recommendations, scheme with a "more info needed"
-  income check, save, track, tick a checklist item, AI fallback answer, change status, log out, log in, then confirm saved,
+  income check, save, track, tick a checklist item, change status, log out, log in, then confirm saved,
   status and checklist all persisted, and visit deadlines.
 - **Scenario B — admin:** create a scheme with the visual rule builder and publish it; it appears in the explorer; a student
   sees "Likely Eligible"; the admin tightens the rule and the student sees "Not Eligible"; the admin unpublishes and the scheme
@@ -77,6 +76,5 @@ SchemeCard rendering, EligibilityBreakdown rendering, safe AI text rendering (no
 
 - [ ] Keyboard-only walkthrough of onboarding, explorer filters (desktop sidebar and mobile sheet) and the admin rule builder.
 - [ ] Screen reader spot check (NVDA/VoiceOver) of the eligibility breakdown and toasts.
-- [x] AI explainer with a real `GEMINI_API_KEY` (2026-10-16, model `gemini-3.5-flash`, thinking budget 0): the eligibility, Hindi and prompt-injection questions all returned `source: "ai"` in 2–3 s, the answers stayed within the stored record, and the injection attempt was refused. The key was confirmed absent from responses, logs and the client bundle. Note: `gemini-2.5-flash` returns 404 for newly created keys, which is why the default model changed.
 - [ ] Deployed environment: cookies, CORS and the Vercel → Render rewrite. This was **not run** because no deployment credentials were available.
 - [ ] Recheck the real scheme records against official sources and mark them verified in the admin panel.

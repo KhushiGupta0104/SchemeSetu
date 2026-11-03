@@ -19,13 +19,6 @@ const EnvSchema = z.object({
   COOKIE_SAMESITE: z.enum(['lax', 'strict', 'none']).default('lax'),
   COOKIE_SECURE: boolish.optional(),
   TRUST_PROXY: z.coerce.number().int().min(0).default(0),
-  GEMINI_API_KEY: z.string().optional(),
-  // gemini-2.5-flash is no longer available to new API keys (404 for keys created in 2026).
-  GEMINI_MODEL: z.string().default('gemini-3.5-flash'),
-  AI_TIMEOUT_MS: z.coerce.number().int().positive().default(30000),
-  // Tokens the model may spend "thinking". The explainer only restates supplied facts, so 0 keeps
-  // answers fast and stops thinking from using up the output limit. Use -1 for the model default.
-  AI_THINKING_BUDGET: z.coerce.number().int().min(-1).default(0),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).optional(),
   RATE_LIMIT_ENABLED: boolish.default(true),
 });
@@ -62,5 +55,4 @@ export const env = {
     .filter(Boolean),
   COOKIE_SECURE: raw.COOKIE_SECURE ?? (isProd || raw.COOKIE_SAMESITE === 'none'),
   LOG_LEVEL: raw.LOG_LEVEL ?? (raw.NODE_ENV === 'test' ? 'silent' : isProd ? 'info' : 'debug'),
-  aiEnabled: Boolean(raw.GEMINI_API_KEY && raw.GEMINI_API_KEY.trim()),
 };

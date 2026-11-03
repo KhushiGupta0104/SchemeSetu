@@ -3,7 +3,6 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { SchemeCard } from '@/components/schemes/SchemeCard';
 import { EligibilityBreakdown } from '@/components/schemes/EligibilityBreakdown';
-import { SafeText } from '@/components/schemes/AiExplainer';
 import { DocumentChecklist } from '@/components/forms/DocumentChecklist';
 import { ApplicationStatusStepper } from '@/components/dashboard/Widgets';
 import { SearchBar } from '@/components/schemes/FilterPanel';
@@ -80,16 +79,6 @@ describe('EligibilityBreakdown', () => {
     expect(screen.getByText('Annual family income', { selector: 'strong' })).toBeInTheDocument();
     expect(screen.getByText('Must be a regular student')).toBeInTheDocument();
     expect(screen.getByText(/not an\s+official decision/)).toBeInTheDocument();
-  });
-});
-
-describe('SafeText (AI output rendering)', () => {
-  it('renders bullets and bold but never injects HTML', () => {
-    const { container } = render(<SafeText text={'**Hello** <img src=x onerror=alert(1)>\n\n- one\n- two'} />);
-    expect(container.querySelector('img')).toBeNull();
-    expect(container.querySelector('strong')).toHaveTextContent('Hello');
-    expect(container.querySelectorAll('li')).toHaveLength(2);
-    expect(container).toHaveTextContent('<img src=x onerror=alert(1)>');
   });
 });
 

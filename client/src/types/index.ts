@@ -283,13 +283,6 @@ export interface DashboardData {
   savedIds: string[];
 }
 
-export interface AiAnswer {
-  source: 'ai' | 'fallback';
-  answer: string;
-  notice?: string;
-  model?: string;
-}
-
 export interface AdminStats {
   totals: {
     total: number;

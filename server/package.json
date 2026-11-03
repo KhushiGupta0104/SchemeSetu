@@ -19,7 +19,6 @@
     "create-admin": "tsx src/seed/createAdmin.ts"
   },
   "dependencies": {
-    "@google/genai": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.5",
     "cookie-parser": "^1.4.7",

@@ -23,9 +23,9 @@ evaluates that profile against a curated database of schemes with a deterministi
 scheme the user sees which conditions they meet, which they don't, and which need more information. Missing or withheld
 data is never treated as disqualifying, and income brackets are handled as intervals rather than guessed values. The
 platform also offers search and filtering, saved schemes, a deadline tracker, document checklists, a personal application
-tracker, an optional AI explainer grounded in the scheme record (Google Gemini, with a non-AI fallback), and an admin
+tracker and an admin
 content-management system with a visual AND/OR rule builder. It is built with React, TypeScript, Node.js/Express and
-MongoDB, and is verified by 103 backend tests, 13 frontend tests and 4 browser end-to-end scenarios.
+MongoDB, and is verified by 98 backend tests, 12 frontend tests and 4 browser end-to-end scenarios.
 
 ## 3. Introduction
 
@@ -84,7 +84,6 @@ Every scheme links to its official source, which remains authoritative. The tool
 | Frontend | React 18, Vite, TypeScript, Tailwind CSS, React Router, TanStack Query, React Hook Form, Zod, Framer Motion, Recharts, Lucide, Sonner |
 | Backend | Node.js, Express, TypeScript, Mongoose, JWT, bcryptjs, Zod, Helmet, CORS, express-rate-limit, Pino |
 | Database | MongoDB (Atlas) |
-| AI | Google Gemini via `@google/genai` (optional) |
 | Testing | Vitest, Supertest, mongodb-memory-server, React Testing Library, Playwright |
 | Deployment | Vercel (frontend), Render (API), MongoDB Atlas |
 
@@ -96,7 +95,6 @@ flowchart LR
   FE -- "/api/v1 via rewrite" --> BE[Express API on Render]
   BE --> DB[(MongoDB Atlas)]
   BE --> EN[Eligibility engine]
-  BE -. optional .-> AI[Gemini]
 ```
 
 The backend follows a layered design: routes → middleware (security, authentication, validation) → controllers → services → models.
@@ -115,9 +113,8 @@ Details are in [ARCHITECTURE.md](ARCHITECTURE.md).
 | FR7 | Users can view upcoming, expired and unknown deadlines and a calendar |
 | FR8 | Users can mark required documents as prepared, with persistence |
 | FR9 | Users can track applications (status, date, notes, history) |
-| FR10 | Users can ask grounded questions about a scheme (AI with fallback) |
-| FR11 | Admins can create, edit, publish, unpublish and delete schemes and edit rules visually |
-| FR12 | Admins see aggregate statistics without personal data |
+| FR10 | Admins can create, edit, publish, unpublish and delete schemes and edit rules visually |
+| FR11 | Admins see aggregate statistics without personal data |
 
 ## 11. Non-Functional Requirements
 
@@ -127,7 +124,7 @@ Details are in [ARCHITECTURE.md](ARCHITECTURE.md).
 | Privacy | Data minimisation; no Aadhaar, bank or certificate data; optional fields; account deletion; no personal data in logs or admin views |
 | Accessibility | Semantic HTML, labelled controls, keyboard support, focus-trapped modals, live regions, contrast, reduced motion |
 | Performance | Route code-splitting, vendor chunking, query caching, indexed queries, lean projections, debounced search |
-| Reliability | Loading, empty and error states; AI fallback; health check |
+| Reliability | Loading, empty and error states; health check |
 | Maintainability | TypeScript end to end, a single eligibility service, documented API, automated tests |
 
 ## 12. Database Design
@@ -159,7 +156,7 @@ O(number of rule nodes) per scheme.
 ## 14. API Design
 
 The REST API is versioned under `/api/v1`, with a consistent JSON envelope, proper status codes, pagination and documented error codes.
-It covers about 30 endpoints across auth, profile, schemes, saved, applications, checklists, AI and admin. See [API.md](API.md).
+It covers about 30 endpoints across auth, profile, schemes, saved, applications, checklists and admin. See [API.md](API.md).
 
 ## 15. Module Descriptions
 
@@ -170,11 +167,10 @@ It covers about 30 endpoints across auth, profile, schemes, saved, applications,
 | Onboarding / Profile | Four-step wizard with a review step; edit page; profile completeness; account deletion |
 | Dashboard | Computed counts, recommendations, deadlines, completeness, quick actions, activity, chart |
 | Explorer | Debounced search, filter sidebar or mobile sheet, active-filter chips, sort, pagination, URL sync |
-| Scheme details | Overview, benefits, eligibility breakdown, documents, steps, dates, verification, actions, AI panel |
+| Scheme details | Overview, benefits, eligibility breakdown, documents, steps, dates, verification, actions |
 | Saved / Deadlines / Checklist / Applications | Personal productivity pages backed by MongoDB |
 | Admin | Statistics with a chart, scheme table, editor with rule builder, publish workflow, safe delete |
 | Eligibility engine | Pure TypeScript service with a validator and explanations |
-| AI service | Prompt building, injection defences, timeout, fallback |
 
 ## 16. Implementation Details
 
@@ -188,12 +184,12 @@ It covers about 30 endpoints across auth, profile, schemes, saved, applications,
 
 Results from the run on 2026-10-15 are summarised in [TESTING.md](TESTING.md):
 
-- backend: 103 tests passed;
-- frontend: 13 tests passed;
+- backend: 98 tests passed;
+- frontend: 12 tests passed;
 - Playwright: 4 end-to-end scenarios passed (new user, admin, security, explorer/mobile);
 - lint and type checks are clean; production builds succeed.
 
-AI with a real Gemini key and the live cloud deployment were **not** tested because credentials were unavailable.
+The live cloud deployment was **not** tested while building because credentials were unavailable.
 
 ## 18. Screenshots
 
@@ -227,7 +223,7 @@ This is the **planned** split. Edit it to reflect what each member actually did.
 | Landing, authentication UI, onboarding wizard | Authentication, sessions, CSRF, RBAC |
 | Explorer, scheme details, dashboard | Scheme APIs, search, filtering, pagination |
 | Saved, deadlines, checklist, applications UI | Eligibility engine and recommendations |
-| Admin UI and rule builder | Admin CRUD APIs, seed scripts, AI service |
+| Admin UI and rule builder | Admin CRUD APIs, seed scripts |
 | Responsive design, accessibility, frontend tests | Validation, security, backend tests |
 
 **Shared:** API integration, Playwright E2E, deployment, documentation, this report, screenshots and the demo.
@@ -257,7 +253,7 @@ This is the **planned** split. Edit it to reflect what each member actually did.
   other 8 remain "needs review" for administrators. Deadlines are set only where the National Scholarship Portal states them.
 - **Uncertain eligibility.** Income brackets and missing data required three-valued logic instead of a simple yes/no.
 - **Cross-site cookies.** These were solved by proxying `/api` through Vercel.
-- **Limitations.** Profile-checkable criteria only; in-memory rate limits; no reminders; Hindi only via AI.
+- **Limitations.** Profile-checkable criteria only; in-memory rate limits; no reminders; no Hindi translation of scheme content.
 
 ## 21. Future Scope
 
@@ -301,9 +297,8 @@ with honest data labelling and careful UX, it helps people understand and prepar
    scheme with a failed criterion such as *PM-KISAN* (the demo student's occupation is not "farmer").
 5. **Save, track and checklist (40 s):** save, track, tick documents, and change the status in the Application tracker.
 6. **Deadlines (15 s):** upcoming and expired lists, and the calendar.
-7. **AI explainer (20 s):** ask "What documents are required?" (AI, or the labelled fallback).
-8. **Admin (60 s):** log in as admin, edit the demo scheme's income rule in the rule builder, save, and show the student's result change.
+7. **Admin (60 s):** log in as admin, edit the demo scheme's income rule in the rule builder, save, and show the student's result change.
    Unpublish it and show it disappear from the explorer.
-9. **Architecture (30 s):** React SPA → Express API → MongoDB, the eligibility service, and the test results.
+8. **Architecture (30 s):** React SPA → Express API → MongoDB, the eligibility service, and the test results.
 
 Reset the demo data before presenting with `npm run seed:reset-demo -w server`.

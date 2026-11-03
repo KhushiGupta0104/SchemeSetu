@@ -45,8 +45,7 @@ documents, track deadlines and keep a personal record of their applications.
 | 8 | **Deadline tracker** | Upcoming, expired and unverified deadlines with a month calendar, counted in IST. A scheme is never called "open" unless an admin verified it. |
 | 9 | **Document checklist** | Tick off documents as you prepare them. Progress uses stable document ids, so it survives admin edits. Nothing is uploaded. |
 | 10 | **Application tracker** | Eight statuses, applied date, notes, status history and a stepper. It is explicitly user-maintained. |
-| 11 | **AI Scheme Explainer** | Gemini (optional) answers questions, including in Hindi, grounded only in the scheme record. It falls back to a deterministic summary when AI is unavailable. |
-| 12 | **Admin CMS** | Stats, a scheme table with search and filters, create/edit/delete, publish/unpublish, verification dates and a visual AND/OR rule builder with a JSON mode. RBAC is enforced on the server. |
+| 11 | **Admin CMS** | Stats, a scheme table with search and filters, create/edit/delete, publish/unpublish, verification dates and a visual AND/OR rule builder with a JSON mode. RBAC is enforced on the server. |
 
 Supporting features include account deletion, accessible modals, keyboard navigation, reduced-motion
 support, responsive layouts with a mobile menu and filter sheet, loading/empty/error states everywhere,
@@ -71,7 +70,7 @@ These were captured automatically from the running app by the Playwright suite (
 Framer Motion, Recharts 3, Lucide icons, Sonner toasts, self-hosted Plus Jakarta Sans + Noto Sans Devanagari.
 
 **Backend:** Node.js (20+), Express 4, TypeScript, Mongoose 8, JWT (jsonwebtoken), bcryptjs, Zod, Helmet, CORS,
-express-rate-limit, Pino structured logging, Google Gen AI SDK (`@google/genai`).
+express-rate-limit, Pino structured logging.
 
 **Database:** MongoDB (Atlas in production; local MongoDB or an embedded dev database locally).
 
@@ -86,7 +85,6 @@ flowchart LR
   P --> A[Express API]
   A --> M[(MongoDB)]
   A --> E[Eligibility engine - pure TS]
-  A -. optional .-> G[Google Gemini]
 ```
 
 It's a modular monolith: one Express API and one React SPA. All business logic, including eligibility, lives on
@@ -137,7 +135,6 @@ Open http://localhost:5173. In development, Vite proxies `/api` to the API, so t
 | `CLIENT_URL` | server | yes | Allowed CORS origin(s), comma-separated |
 | `COOKIE_SAMESITE` / `COOKIE_SECURE` | server | – | Cookie policy (see [DEPLOYMENT](docs/DEPLOYMENT.md)) |
 | `TRUST_PROXY` | server | – | Proxies in front of the app (Render: `1`) |
-| `GEMINI_API_KEY` / `GEMINI_MODEL` / `AI_TIMEOUT_MS` / `AI_THINKING_BUDGET` | server | – | Optional AI explainer (defaults: `gemini-3.5-flash`, 30000 ms, thinking off) |
 | `LOG_LEVEL`, `RATE_LIMIT_ENABLED` | server | – | Logging / rate limiting |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME`, `DEMO_USER_PASSWORD` | server (scripts) | – | Used only by `create-admin` and `seed:demo` |
 | `VITE_API_BASE_URL` | client | – | API base as seen by the browser (default `/api/v1`) |
@@ -165,7 +162,7 @@ npm run screenshots         # same, and writes docs/screenshots/*.png
 npm run lint && npm run typecheck && npm run build
 ```
 
-Last verified run: **103 backend tests, 13 frontend tests and 4 end-to-end scenarios passed** (2026-10-16). Details are in
+Last verified run: **98 backend tests and 12 frontend tests passed** (2026-11-04); the 4 end-to-end scenarios last passed on 2026-10-16. Details are in
 [docs/TESTING.md](docs/TESTING.md).
 
 ## Deployment
@@ -193,7 +190,7 @@ schemesetu/
 ├── server/                 Express API
 │   └── src/
 │       ├── config/ constants/ controllers/ middleware/ models/ routes/ validators/ utils/
-│       ├── services/       eligibility/ recommendations/ ai/ schemeService authTokens
+│       ├── services/       eligibility/ recommendations/ schemeService authTokens
 │       ├── seed/           seed.ts, createAdmin.ts, data/realSchemes.ts, data/demoSchemes.ts
 │       └── tests/          unit + API tests, e2e API launcher
 ├── e2e/                    Playwright scenarios
@@ -209,7 +206,7 @@ with your names and adjust it to reflect what each member actually did.
 | Area | Member 1 — Frontend & UX (`<Name>`) | Member 2 — Backend & Intelligence (`<Name>`) |
 |---|---|---|
 | Setup | React/Vite/Tailwind app, design system | Express/TypeScript API, MongoDB models |
-| Features | Landing, auth UI, onboarding, explorer, dashboard, saved, deadlines, checklist, applications, admin UI | Auth & sessions, scheme APIs, eligibility engine, recommendations, admin CRUD, AI integration |
+| Features | Landing, auth UI, onboarding, explorer, dashboard, saved, deadlines, checklist, applications, admin UI | Auth & sessions, scheme APIs, eligibility engine, recommendations, admin CRUD |
 | Quality | Responsive design, accessibility, frontend tests | Validation, security, backend tests |
 | Shared | API integration, E2E tests, deployment, documentation, report, screenshots, demo | ← same |
 
@@ -222,7 +219,6 @@ Suggested commit sequence: [docs/PROJECT_REPORT.md § Division of Work](docs/PRO
 - Rate limiting uses an in-memory store, so limits are per instance. Use a shared store if you scale horizontally.
 - Explorer filtering by eligibility evaluates the published catalogue in memory, which suits hundreds of schemes, not hundreds of thousands.
 - There are no email or browser reminders, and the UI does not pretend otherwise.
-- AI explanations need a Gemini API key. Without one, the app uses deterministic summaries (no Hindi translation).
 
 ## License
 

@@ -3,7 +3,6 @@ import type {
   AdminSchemeDetail,
   AdminSchemeRow,
   AdminStats,
-  AiAnswer,
   Application,
   Checklist,
   ChecklistSummary,
@@ -83,12 +82,6 @@ export const ChecklistApi = {
   get: (schemeId: string) => apiData<Checklist>(`/checklists/${schemeId}`),
   update: (schemeId: string, completedDocumentIds: string[]) =>
     apiData<Checklist>(`/checklists/${schemeId}`, { method: 'PUT', body: { completedDocumentIds } }),
-};
-
-export const AiApi = {
-  status: () => apiData<{ available: boolean }>('/ai/status'),
-  explain: (body: { schemeId: string; preset?: string; question?: string }) =>
-    apiData<AiAnswer>('/ai/explain', { method: 'POST', body, timeoutMs: 40000 }),
 };
 
 export const AdminApi = {

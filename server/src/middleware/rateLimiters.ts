@@ -24,11 +24,3 @@ export const apiLimiter = make(15 * 60 * 1000, 600);
 
 /** Brute-force protection for login/register. */
 export const authLimiter = make(15 * 60 * 1000, 20, { skipSuccessfulRequests: true });
-
-/** AI explanations cost money — limit per signed-in user. */
-export const aiLimiter = make(60 * 1000, 6, {
-  keyGenerator: (req) => (req.user ? `user:${req.user.id}` : `ip:${req.ip}`),
-});
-export const aiDailyLimiter = make(24 * 60 * 60 * 1000, 60, {
-  keyGenerator: (req) => (req.user ? `user:${req.user.id}` : `ip:${req.ip}`),
-});

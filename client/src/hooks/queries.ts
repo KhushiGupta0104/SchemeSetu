@@ -1,7 +1,6 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
-  AiApi,
   ApplicationApi,
   ChecklistApi,
   MetaApi,
@@ -83,10 +82,6 @@ export function useChecklists() {
 
 export function useChecklist(schemeId: string | undefined) {
   return useQuery({ queryKey: keys.checklist(schemeId ?? ''), queryFn: () => ChecklistApi.get(schemeId!), enabled: Boolean(schemeId) });
-}
-
-export function useAiStatus() {
-  return useQuery({ queryKey: ['ai-status'], queryFn: AiApi.status, staleTime: 10 * 60 * 1000 });
 }
 
 /** Invalidates everything that depends on a user's saved / tracked data. */

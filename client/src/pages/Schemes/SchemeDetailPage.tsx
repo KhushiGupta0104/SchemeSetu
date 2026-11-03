@@ -14,7 +14,6 @@ import {
   ListOrdered,
   MapPin,
   Scale,
-  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useChecklist, useEligibility, useMeta, useScheme, useTrackApplication } from '@/hooks/queries';
@@ -25,7 +24,6 @@ import { EmptyState, ErrorState, PageLoader, Skeleton, Spinner } from '@/compone
 import { AccessibleModal } from '@/components/common/Modal';
 import { SaveButton } from '@/components/schemes/SchemeCard';
 import { EligibilityBreakdown } from '@/components/schemes/EligibilityBreakdown';
-import { AiExplainer } from '@/components/schemes/AiExplainer';
 import { DocumentChecklist } from '@/components/forms/DocumentChecklist';
 import { daysLabel, formatDate, labelOf } from '@/utils/format';
 
@@ -130,9 +128,6 @@ export default function SchemeDetailPage() {
             <button type="button" className="btn-secondary" onClick={requireLogin(() => setChecklistOpen(true))}>
               <ListChecks className="h-4 w-4" aria-hidden /> View Document Checklist
             </button>
-            <a href="#ai-explainer" className="btn-secondary">
-              <Sparkles className="h-4 w-4 text-indigo-600" aria-hidden /> Explain with AI
-            </a>
           </div>
         </div>
       </header>
@@ -210,15 +205,6 @@ export default function SchemeDetailPage() {
             )}
             <p className="mt-4 rounded-xl bg-slate-50 p-3 text-xs text-ink-muted">SchemeSetu does not submit applications. Apply only through the official portal.</p>
           </Section>
-
-          <section id="ai-explainer" aria-labelledby="ai-title" className="card scroll-mt-24 border-indigo-100 p-5 sm:p-6">
-            <h2 id="ai-title" className="mb-1 flex items-center gap-2.5 text-lg font-bold">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-indigo-50 text-indigo-600"><Sparkles className="h-4 w-4" aria-hidden /></span>
-              Ask about this scheme
-            </h2>
-            <p className="mb-4 text-sm text-ink-muted">Answers use only SchemeSetu&apos;s record of this scheme and your eligibility check.</p>
-            <AiExplainer schemeId={scheme.id} />
-          </section>
         </div>
 
         <aside className="space-y-6">

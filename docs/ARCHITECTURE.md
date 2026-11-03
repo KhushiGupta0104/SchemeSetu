@@ -15,14 +15,12 @@ flowchart TB
   subgraph Render
     API[Express API /api/v1]
     MW[Helmet · CORS · rate limit · CSRF · auth · Zod validation]
-    SVC[Services: eligibility engine · recommendations · schemes · AI]
+    SVC[Services: eligibility engine · recommendations · schemes]
   end
   DB[(MongoDB Atlas)]
-  GEM[Google Gemini - optional]
   UI --> STATIC
   UI -- fetch, credentials --> RW --> API
   API --> MW --> SVC --> DB
-  SVC -. explain only .-> GEM
 ```
 
 ## Request lifecycle
@@ -64,17 +62,7 @@ flowchart TB
   checkable rules is always `MORE_INFORMATION_NEEDED`. There are no percentages or scores.
 - `ruleValidator.ts` validates rules as data: known fields, operators allowed for the field type, valid enum values,
   numeric ranges, group nesting ≤ 4 levels including the root, and no extra keys. Nothing is ever `eval`'d.
-- One service is used everywhere: explorer, details, recommendations, dashboard and AI context.
-
-## AI explainer (`server/src/services/ai`)
-
-- The API is called server-side only. The key never reaches the browser.
-- Context includes the scheme record and the engine's per-criterion results. The user's raw profile values and identity are **not** sent.
-- The system instruction requires grounded answers only, forbids invented facts, guarantees or requests for identifiers,
-  and tells the model to treat delimited data as untrusted. Delimiter tags inside data are neutralised.
-- Safeguards: input ≤ 500 characters, output ≤ 2048 tokens (truncated to 4,000 characters), temperature 0.2, timeout,
-  6 requests per minute and 60 per day per user.
-- On any failure or a missing key, `fallback.ts` builds a deterministic answer from stored fields.
+- One service is used everywhere: explorer, details, recommendations and dashboard.
 
 ## Frontend structure
 

@@ -90,13 +90,6 @@ Statuses: `interested`, `preparing_documents`, `ready_to_apply`, `applied`, `und
 | GET | `/checklists/:schemeId` | 🔒 | `{ scheme, documents[{docId,name,description,optional,completed}], completedCount, total }` |
 | PUT | `/checklists/:schemeId` | 🔒 | `{ completedDocumentIds: string[] }`. Ids no longer required are ignored. |
 
-## AI
-
-| Method | Path | Auth | Description |
-|---|---|---|---|
-| GET | `/ai/status` | – | `{ available }` |
-| POST | `/ai/explain` | 🔒 | `{ schemeId, preset?: overview\|eligibility\|documents\|apply\|benefits\|hindi, question?: ≤500 chars }` returns `{ source: 'ai'\|'fallback', answer, notice?, model? }`. Limited to 6/min and 60/day per user. |
-
 ## Admin (🛡 every route — 401 anonymous, 403 non-admin)
 
 | Method | Path | Description |
