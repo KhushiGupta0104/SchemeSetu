@@ -1,0 +1,32 @@
+# Render Blueprint for the SchemeSetu API. Secrets marked sync:false are entered in the Render dashboard.
+services:
+  - type: web
+    name: schemesetu-api
+    runtime: node
+    rootDir: .
+    buildCommand: npm ci --include=dev && npm run build -w server
+    startCommand: npm run start -w server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "20"
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB_NAME
+        value: schemesetu
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false # e.g. https://schemesetu.vercel.app
+      - key: COOKIE_SAMESITE
+        value: lax # Vercel rewrites /api to Render, so cookies are first-party
+      - key: TRUST_PROXY
+        value: "2" # Vercel rewrite + Render load balancer; use "1" if browsers call Render directly
+      - key: GEMINI_API_KEY
+        sync: false # optional
+      - key: LOG_LEVEL
+        value: info
