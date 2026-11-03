@@ -5,7 +5,6 @@ import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/utils/cn';
 import { PageLoader } from '@/components/common/States';
 import { Navbar } from './Navbar';
-import { Footer } from './Footer';
 import { ADMIN_NAV, APP_NAV, type NavItem } from './nav';
 
 /** Scrolls to top on navigation, or to the #hash target when present. */
@@ -31,7 +30,6 @@ export function RootLayout() {
           <Outlet />
         </ErrorBoundary>
       </main>
-      <Footer />
     </div>
   );
 }
