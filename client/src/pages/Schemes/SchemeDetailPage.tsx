@@ -95,7 +95,6 @@ export default function SchemeDetailPage() {
 
       {/* Overview header */}
       <header className="card relative overflow-hidden p-6 sm:p-8">
-        <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-l from-brand-50 to-transparent md:block" aria-hidden />
         <div className="relative">
           <div className="flex flex-wrap gap-2">
             <span className="chip bg-brand-50 text-brand-700">{labelOf(meta?.schemeCategories, scheme.category)}</span>

@@ -146,7 +146,7 @@ export function AiExplainer({ schemeId }: { schemeId: string }) {
           </p>
         )}
         {answer && !mutation.isPending && (
-          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl border border-indigo-100 bg-gradient-to-b from-indigo-50/60 to-white p-5">
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl border border-line bg-white p-5">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold text-ink">“{answer.asked}”</p>
               <span className={cn('chip', answer.source === 'ai' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-ink-muted')}>

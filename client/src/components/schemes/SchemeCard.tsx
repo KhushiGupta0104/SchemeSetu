@@ -56,7 +56,7 @@ export function SchemeCard({ scheme, index = 0 }: { scheme: SchemeSummary; index
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index, 8) * 0.04 }}
-      className="card group flex h-full flex-col p-5 transition hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-lift"
+      className="card group flex h-full flex-col p-5 transition hover:border-brand-300"
       aria-labelledby={`scheme-${scheme.id}-title`}
     >
       <div className="flex flex-wrap items-center gap-1.5">

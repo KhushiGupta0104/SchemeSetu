@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <MotionConfig reducedMotion="user">
+          <MotionConfig reducedMotion="always">
             <App />
             <Toaster position="top-center" richColors closeButton toastOptions={{ duration: 3500 }} />
           </MotionConfig>

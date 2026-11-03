@@ -57,7 +57,7 @@ function UserMenu() {
         aria-haspopup="menu"
         className="flex items-center gap-2 rounded-xl border border-line bg-white py-1.5 pl-1.5 pr-2.5 text-sm font-semibold hover:border-brand-300"
       >
-        <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-xs font-bold text-white">
+        <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-xs font-bold text-white">
           {initials}
         </span>
         <span className="hidden max-w-[8rem] truncate lg:inline">{user.name.split(' ')[0]}</span>
@@ -106,7 +106,7 @@ export function Navbar() {
   const items = user ? APP_NAV.slice(0, 4) : PUBLIC_NAV;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/80 bg-white/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-line bg-white">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow">
         Skip to main content
       </a>

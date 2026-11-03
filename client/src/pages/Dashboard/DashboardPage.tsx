@@ -49,7 +49,7 @@ export default function DashboardPage() {
       />
 
       {user && !user.onboardingCompleted && (
-        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-6 flex flex-col gap-3 rounded-2xl border border-brand-200 bg-gradient-to-r from-brand-50 to-indigo-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-6 flex flex-col gap-3 rounded-2xl border border-brand-200 bg-brand-50 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex gap-3">
             <Sparkles className="h-6 w-6 shrink-0 text-brand-600" aria-hidden />
             <div>
