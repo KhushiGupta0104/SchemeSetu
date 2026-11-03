@@ -27,6 +27,3 @@ Thumbs.db
 !.vscode/extensions.json
 .idea/
 .vercel
-# local report build
-report/
-*.pdf
