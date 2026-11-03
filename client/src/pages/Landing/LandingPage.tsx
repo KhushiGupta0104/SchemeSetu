@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Accessibility, ArrowRight, BriefcaseBusiness, ExternalLink, Flower2, GraduationCap, HandCoins, HeartHandshake } from 'lucide-react';
+import { Accessibility, ArrowRight, BriefcaseBusiness, Flower2, GraduationCap, HandCoins, HeartHandshake } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const steps = [
@@ -15,12 +15,6 @@ const categories = [
   { value: 'disability_support', label: 'Disability Support', Icon: Accessibility },
   { value: 'employment_skills', label: 'Employment & Skills', Icon: BriefcaseBusiness },
   { value: 'social_welfare', label: 'Social Welfare', Icon: HeartHandshake },
-];
-
-const portals = [
-  { name: 'National Scholarship Portal', url: 'https://scholarships.gov.in' },
-  { name: 'myScheme', url: 'https://www.myscheme.gov.in' },
-  { name: 'National Portal of India', url: 'https://www.india.gov.in' },
 ];
 
 export default function LandingPage() {
@@ -65,7 +59,7 @@ export default function LandingPage() {
       </section>
 
       {/* Categories */}
-      <section className="pb-12">
+      <section className="pb-16">
         <div className="container-page">
           <div className="flex items-end justify-between gap-4">
             <h2 className="text-2xl font-bold">Browse by category</h2>
@@ -80,28 +74,6 @@ export default function LandingPage() {
                 {c.label}
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Note + official portals */}
-      <section className="pb-14">
-        <div className="container-page">
-          <div className="card p-5">
-            <p className="text-sm text-ink-soft">
-              <strong>Note:</strong> SchemeSetu is a college project, not a government website. Results are only a guide —
-              always check the official portal before applying.
-            </p>
-            <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-              {portals.map((p) => (
-                <li key={p.url}>
-                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
-                    {p.name} <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-                    <span className="sr-only">(opens in a new tab)</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>
